@@ -12,7 +12,7 @@ Book Car When Logged In
     [Documentation]     Tests the process of booking a car. Covers several requirements.
     [Tags]      TestBookCar
     Given I log in to rental    ${userEmail}    ${userPassword}
-    And I select dates
+    And I Select Dates
     When I attempt to book a car
     And I fill in booking
     Then Booked car should be added to my page
