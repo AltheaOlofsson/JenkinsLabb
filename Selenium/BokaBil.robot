@@ -41,6 +41,7 @@ Attempt To Book Car When Not Logged In Gives Alert
     [Documentation]     Tests Requirement from Car Selection that attempt to book when not logged in will produce a propmt.
     [Tags]      TestNotLoggedIn
     Given I am at startpage
+    And I Log Out
     When I attempt to book a car
     Then Alert Should be presented
 
