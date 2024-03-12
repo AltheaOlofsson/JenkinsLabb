@@ -17,7 +17,7 @@ pipeline {
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
-                    'mvn clean install'
+                    bat 'mvn clean install'
                 }
             }
         }
