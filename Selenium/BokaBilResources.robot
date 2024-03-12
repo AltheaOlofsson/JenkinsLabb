@@ -73,15 +73,15 @@ I am at startpage
 I Select Dates
     [Documentation]     Choose dates to rent car.
     [Tags]      SelectDate      VG_Test
-    Input Text    //input[@id='start']    0228
+    Input Text    //input[@id='start']    0328
     Click Element    //input[@id='end']
-    Input Text    //input[@id='end']    0303
+    Input Text    //input[@id='end']    0330
 
 Search for selected dates are visible
     [Documentation]     Verifies that the entered timeperiod is shown.
     [Tags]      verifyDateSelection
     Click Element    //button[@id='continue']
-    Page Should Contain    2024-02-28 – 2024-03-03
+    Page Should Contain    2024-03-28 – 2024-03-30
 
 #Find and book Cars
 I attempt to book a car
