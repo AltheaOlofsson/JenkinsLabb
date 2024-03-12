@@ -35,19 +35,16 @@ pipeline {
                         execPattern: '**/target/jacoco.exec',
                         classPattern: '**/target/classes/se/iths',
                         sourcePattern: '**/src/main/java/se/iths'
-
                     )
                     junit '**/TEST*.xml'
-
                 }
-
             }
-
         }
-        
-        stage('Stage4') {
+        stage('Run Robot Framework') {
             steps {
-                echo 'Stage 4'
+                dir('Selenium') {
+                    bat 'robot --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                }
             }
             post { 
                 always { 
