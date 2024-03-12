@@ -26,13 +26,11 @@ pipeline {
                 dir('TrailrunnerProject') {
                         bat 'mvn test'
                 }
-                [12:02] Hamid Hosseini - Utbildare
-stage('Post Test') {
-
+            }
+        }
+        stage('Post Test') {
             steps {
-
                 script {
-
                     jacoco(
                         execPattern: 'target/*.exec',
                         classPattern: 'target/classes',
@@ -46,9 +44,7 @@ stage('Post Test') {
             }
 
         }
-
-            }
-        }
+        
         stage('Stage4') {
             steps {
                 echo 'Stage 4'
