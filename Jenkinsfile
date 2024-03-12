@@ -43,7 +43,7 @@ pipeline {
         stage('Run Robot Framework') {
             steps {
                 dir('Selenium') {
-                    bat 'robot --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                    bat 'robot  --outputdir RobotResults --variable browser:headlesschrome BokaBil.robot'
                 }
             }
             post { 
