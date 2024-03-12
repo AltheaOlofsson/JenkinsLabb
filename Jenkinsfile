@@ -22,7 +22,7 @@ pipeline {
         }
         stage('Test TrailRunner') {
             steps {
-                dir('Test TrailrunnerProject') {
+                dir('TrailrunnerProject') {
                         bat 'mvn test'
                 }
             }
