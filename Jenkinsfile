@@ -25,6 +25,18 @@ pipeline {
                 dir('TrailrunnerProject') {
                         bat 'mvn test'
                 }
+                post {
+                    always {
+                        jacoco(
+                            execPattern: '**/target/*.exec',
+                            classPattern: '**/target/classes/se/iths',
+                            sourcePattern: '**/src/main/java/se/iths',
+                            exclusionPattern: '**/src/test/java/se/iths'
+                        )
+                        junit '**/TEST*.xml'
+                    }
+                }
+
             }
         }
         stage('Stage4') {
