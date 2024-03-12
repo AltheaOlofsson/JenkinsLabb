@@ -25,7 +25,7 @@ pipeline {
                 dir('Test TrailrunnerProject')
                     bat 'mvn test'
             }
-          
+        }
         stage('Stage4') {
             steps {
                 echo 'Stage 4'
