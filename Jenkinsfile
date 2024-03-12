@@ -26,16 +26,26 @@ pipeline {
                 dir('TrailrunnerProject') {
                         bat 'mvn test'
                 }
-                post {
-                    always {
-                        jacoco(
-                            execPattern: '**/target/*.exec',
-                            classPattern: '**/target/classes/se/iths',
-                            sourcePattern: '**/src/main/java/se/iths',
-                        )
-                        junit '**/TEST*.xml'
-                    }
+                [12:02] Hamid Hosseini - Utbildare
+stage('Post Test') {
+
+            steps {
+
+                script {
+
+                    jacoco(
+                        execPattern: 'target/*.exec',
+                        classPattern: 'target/classes',
+                        sourcePattern: 'src/main/java',
+                        exclusionPattern: 'src/test*'
+                    )
+                    junit '**/TEST*.xml'
+
                 }
+
+            }
+
+        }
 
             }
         }
