@@ -18,7 +18,6 @@ Book Car When Logged In
     Then Booked car should be added to my page
     And I Log Out
 
-
 Cancel Booking Of Car
     [Documentation]     Tests Requirement from My Page that cancelation of booking is possible.
     [Tags]      TestCancelation

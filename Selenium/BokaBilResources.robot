@@ -10,7 +10,9 @@ ${urlRental}    https://rental3.infotiv.net/
 #login
 ${userEmail}    robot.selenium@robot.se
 ${userPassword}     123Robot
-${LoggedIn}     False
+${LoggedIn}     True
+${LoggedOut}    False
+${AmLoggedIn}     True
 ${WrongEmail}   wrong.seleniumrobot.se
 #Car to be Booked
 ${AudiTT}    //input[@id='bookTTpass5']
@@ -44,7 +46,8 @@ Check if I am Logged In
     [Documentation]     Checks if user is logged in
     [Tags]      VerifyLoggedIn
     [Arguments]     ${LoggedIn}
-    ${LoggedIn}=   Set Variable If    Element should be visible    //label[@id='welcomePhrase']    True     False
+
+    ${LoggedIn}=    Set Variable If     Element should be visible     //button[@id='logout']      True     False
     RETURN    ${LoggedIn}
 
 I Log Out
@@ -57,23 +60,20 @@ I Assure I Am Logged Out
     [Documentation]     Makes sure I am logged out
     [Tags]      Logout      VG_Test
     ${LoginStatus}=     Run Keyword And Return Status    Check if I am Logged In    ${LoggedIn}
-    Run Keyword If      ${logged_in}    I Log Out
-    Wait Until Element Is Visible    //button[@id='login']
+    Run Keyword If      ${LoginStatus} != ${LoggedOut}    I Log Out
     I am at startpage
-
-
 
 I make sure I am logged in
     [Documentation]     Checks if logged in, Logs in if false.
     [Tags]      AssureLoggedIn
     ${LoginStatus}=     Run Keyword And Return Status    Check if I am Logged In    ${LoggedIn}
-    Run Keyword If    not ${logged_in}    I log in to rental    ${userEmail}    ${userPassword}
-    Wait Until Element Is Visible    //label[@id='welcomePhrase']
+    Run Keyword If    ${LoginStatus} == ${LoggedOut}    I log in to rental    ${userEmail}    ${userPassword}
     I am at startpage
 
 I am at startpage
     [Documentation]     Makes sure i am at start page
     [Tags]     Startpage
+    Wait Until Element Is Visible    //h1[@id='title']
     Click Element    //h1[@id='title']
     Wait Until Element Is Visible    //h1[@id='questionText']
 
@@ -91,7 +91,7 @@ Search for selected dates are visible
     [Documentation]     Verifies that the entered timeperiod is shown.
     [Tags]      verifyDateSelection
     Click Element    //button[@id='continue']
-    Page Should Contain    2024-03-28 – 2024-03-03
+    Page Should Contain    2024-03-28 – 2024-03-30
 
 #Find and book Cars
 I attempt to book a car
