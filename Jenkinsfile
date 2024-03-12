@@ -22,8 +22,9 @@ pipeline {
         }
         stage('Test TrailRunner') {
             steps {
-                dir('Test TrailrunnerProject')
-                    bat 'mvn test'
+                dir('Test TrailrunnerProject') {
+                        bat 'mvn test'
+                }
             }
         }
         stage('Stage4') {
