@@ -32,10 +32,10 @@ pipeline {
             steps {
                 script {
                     jacoco(
-                        execPattern: 'target/*.exec',
-                        classPattern: 'target/classes',
-                        sourcePattern: 'src/main/java',
-                        exclusionPattern: 'src/test*'
+                        execPattern: '**/target/jacoco.exec',
+                        classPattern: '**/target/classes/se/iths',
+                        sourcePattern: '**/src/main/java/se/iths'
+
                     )
                     junit '**/TEST*.xml'
 
