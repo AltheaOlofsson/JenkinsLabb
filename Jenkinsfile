@@ -1,28 +1,35 @@
 pipeline {
     agent any
+    environment {
+        gitURL  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
+    }
+    parameters {
+        choice choices: ['main', 'b1'], description: "Which Branch do you want to run?", name: "Branch"
+    }
+
     stages {
-        stage('Stage1') {
+        stage('Checkout') {
             steps {
-                echo 'Hello World'
+                git branch: "${params.Branch}", url: "${gitURL}"
             }
         }
         stage('Stage2') {
             steps {
-                echo 'Hello World'
+                echo 'Stage 2'
             }
         }
         stage('Stage3') {
             steps {
-                echo 'Hello World'
+                echo 'Stage 3'
             }
         }
         stage('Stage4') {
             steps {
-                echo 'Hello World'
+                echo 'Stage 4'
             }
             post { 
                 always { 
-                    echo 'I will always say Hello again!'
+                    echo 'Post stage 4'
                 }
             }
         }
