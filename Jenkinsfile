@@ -13,10 +13,11 @@ pipeline {
                 git branch: "${params.Branch}", url: "${gitURL}"
             }
         }
+
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
-                    bat 'mvn compile'
+                    'mvn clean install'
                 }
             }
         }
