@@ -53,6 +53,11 @@ pipeline {
                     robot outputPath: 'RobotResults'
                 }
             }
+        }
+        stage('Clean Jenkins Workspace') {
+            steps {
+                cleanWs()
+            }
         } 
     }
 }
