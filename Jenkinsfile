@@ -13,10 +13,11 @@ pipeline {
                 git branch: "${params.Branch}", url: "${gitURL}"
             }
         }
+
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
-                    bat 'mvn compile'
+                    bat 'mvn clean install'
                 }
             }
         }
@@ -27,6 +28,23 @@ pipeline {
                 }
             }
         }
+        stage('Post Test') {
+            steps {
+                script {
+                    jacoco(
+                        execPattern: '**/target/jacoco.exec',
+                        classPattern: '**/target/classes/se/iths',
+                        sourcePattern: '**/src/main/java/se/iths'
+
+                    )
+                    junit '**/TEST*.xml'
+
+                }
+
+            }
+
+        }
+        
         stage('Stage4') {
             steps {
                 echo 'Stage 4'
