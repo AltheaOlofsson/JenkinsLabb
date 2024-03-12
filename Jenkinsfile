@@ -50,7 +50,7 @@ pipeline {
         stage('RobotResult') {
             steps {
                 dir('Selenium') {
-                    bat robot outputPath: 'RobotResults'
+                    robot outputPath: 'RobotResults'
                 }
             }
         } 
