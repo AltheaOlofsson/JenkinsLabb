@@ -41,7 +41,7 @@ Attempt To Book Car When Not Logged In Gives Alert
     [Documentation]     Tests Requirement from Car Selection that attempt to book when not logged in will produce a propmt.
     [Tags]      TestNotLoggedIn
     Given I am at startpage
-    And I Log Out
+    And I Assure I Am Logged Out
     When I attempt to book a car
     Then Alert Should be presented
 
@@ -49,6 +49,7 @@ Attempt To Book Car When Not Logged In Gives Alert
 Log in with wrong Email gives error
     [Documentation]     Tests Requirement from Header that invalid input gives Error message.
     [Tags]      TestWrongLogin
+    Given I Assure I Am Logged Out
     When I Attempt login with wrong Email   ${WrongEmail}   ${userPassword}
     Then Login Error should be visible
 

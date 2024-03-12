@@ -53,6 +53,16 @@ I Log Out
     Click Element    //button[@id='logout']
     Wait Until Element Is Visible    //button[@id='login']
 
+I Assure I Am Logged Out
+    [Documentation]     Makes sure I am logged out
+    [Tags]      Logout      VG_Test
+    ${LoginStatus}=     Run Keyword And Return Status    Check if I am Logged In    ${LoggedIn}
+    Run Keyword If      ${logged_in}    I Log Out
+    Wait Until Element Is Visible    //button[@id='login']
+    I am at startpage
+
+
+
 I make sure I am logged in
     [Documentation]     Checks if logged in, Logs in if false.
     [Tags]      AssureLoggedIn
