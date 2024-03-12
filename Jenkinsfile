@@ -46,12 +46,13 @@ pipeline {
                     bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
                 }
             }
-            post { 
-                always { 
+        }
+        stage('RobotResult') {
+            steps {
+                dir('Selenium') {
                     bat robot outputPath: 'RobotResults'
                 }
             }
-        }
-        
+        } 
     }
 }
