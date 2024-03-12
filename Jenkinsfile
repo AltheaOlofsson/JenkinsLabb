@@ -4,7 +4,7 @@ pipeline {
         gitURL  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
     }
     parameters {
-        choice choices: ['main', 'b1'], description: "Which Branch do you want to run?", name: "Branch"
+        choice choices: ['main', 'b1'], description: 'Which Branch do you want to run?', name: 'Branch'
     }
 
     stages {
@@ -13,9 +13,11 @@ pipeline {
                 git branch: "${params.Branch}", url: "${gitURL}"
             }
         }
-        stage('Stage2') {
+        stage('Build TrailRunner') {
             steps {
-                echo 'Stage 2'
+                dir('TrailrunnerProject') {
+                    bat 'mvn compile'
+                }
             }
         }
         stage('Stage3') {
