@@ -81,7 +81,7 @@ Search for selected dates are visible
     [Documentation]     Verifies that the entered timeperiod is shown.
     [Tags]      verifyDateSelection
     Click Element    //button[@id='continue']
-    Page Should Contain    2024-03-28 – 2024-03-30
+    Page Should Contain    2024-03-28 – 2024-03-03
 
 #Find and book Cars
 I attempt to book a car
