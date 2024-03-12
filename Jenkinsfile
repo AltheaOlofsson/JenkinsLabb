@@ -1,19 +1,27 @@
 pipeline {
     agent any
+
     environment {
-        gitURL  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
+        gitUrl  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
     }
     parameters {
         choice choices: ['main', 'b1'], description: 'Which Branch do you want to run?', name: 'Branch'
     }
+    options {
+        skipDefaultCheckout()
+    }
 
-    stages {
+    stages {       
+        stage('Clean Jenkins Workspace') {
+            steps {
+                cleanWs()
+            }
+        } 
         stage('Checkout') {
             steps {
                 git branch: "${params.Branch}", url: "${gitURL}"
             }
         }
-
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
@@ -28,7 +36,7 @@ pipeline {
                 }
             }
         }
-        stage('Post Test') {
+        stage('Trailrunner reports') {
             steps {
                 script {
                     jacoco(
@@ -54,10 +62,5 @@ pipeline {
                 }
             }
         }
-        stage('Clean Jenkins Workspace') {
-            steps {
-                cleanWs()
-            }
-        } 
     }
 }
