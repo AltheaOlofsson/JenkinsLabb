@@ -46,9 +46,9 @@ pipeline {
     }
     post {
         failure {
-        mail to: 'althea.olofsson@gmail.com',
-             subject: "New Pipeline run: ${currentBuild.fullDisplayName}",
-             body: "The pipeline was just run. Check it out ${env.BUILD_URL}"
+            mail to: 'althea.olofsson@gmail.com',
+                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL}"
         }
     }
 }
