@@ -45,10 +45,10 @@ pipeline {
         }
     }
     post {
-    always {
+        failure {
         mail to: 'althea.olofsson@gmail.com',
-             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-             body: "Something is wrong with ${env.BUILD_URL}"
+             subject: "New Pipeline run: ${currentBuild.fullDisplayName}",
+             body: "The pipeline was just run. Check it out ${env.BUILD_URL}"
+        }
     }
-}
 }
