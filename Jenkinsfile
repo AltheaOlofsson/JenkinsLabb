@@ -1,7 +1,8 @@
 pipeline {
     agent any
 
-    stages {
+    stages {       
+
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
@@ -12,11 +13,23 @@ pipeline {
         stage('Test TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    bat 'mvn test'
+                    script {
+                        try {
                         bat 'mvn test'
+                        }catch (e) {
+                            mail to: 'althea.olofsson@gmail.com',
+                            subject: "Test Failed: ${currentBuild.fullDisplayName}",
+                            body: "Recent tests failed. Check it out: ${env.BUILD_URL}"
+                            throw e
+                        }
+                    }
+                }
                 }
             }
         }
-        stage('Post Test') {
+        stage('Trailrunner reports') {
             steps {
                 script {
                     jacoco(
@@ -29,9 +42,20 @@ pipeline {
             }
         }
         stage('Run Robot Framework') {
-            steps {
+             steps {
                 dir('Selenium') {
-                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults --nostatusrc BokaBil.robot'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        try {
+                        bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                        }catch (e) {
+                            mail to: 'althea.olofsson@gmail.com',
+                            subject: "Test Failed: ${currentBuild.fullDisplayName}",
+                            body: "Recent Test failed. Check it out: ${env.BUILD_URL}"
+                            throw e
+                        }
+                    }
+                }
                 }
             }
         }
@@ -41,6 +65,13 @@ pipeline {
                     robot outputPath: 'RobotResults'
                 }
             }
-        } 
+        }
+    }
+    post {
+        failure {
+            mail to: 'althea.olofsson@gmail.com',
+                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL}"
+        }
     }
 }
