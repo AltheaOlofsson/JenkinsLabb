@@ -17,7 +17,7 @@ pipeline {
                     script {
                         try {
                         bat 'mvn test'
-                        }catch {
+                        }catch (e) {
                             mail to: 'althea.olofsson@gmail.com',
                             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
                             body: "Something is wrong with ${env.BUILD_URL}"
