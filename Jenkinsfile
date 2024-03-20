@@ -40,6 +40,11 @@ pipeline {
             }
         }
         stage('RobotResult') {
+             when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
             steps {
                 dir('Selenium') {
                     robot outputPath: 'RobotResults'
