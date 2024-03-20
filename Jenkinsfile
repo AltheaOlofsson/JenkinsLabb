@@ -12,9 +12,20 @@ pipeline {
         }
         stage('Test TrailRunner') {
             steps {
-                dir('TrailrunnerProject') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        try {
+                        dir('TrailrunnerProject') {
                         bat 'mvn test'
-                }
+                        }
+                        }catch {
+                            mail to: 'althea.olofsson@gmail.com',
+                            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}"
+                            throw e
+                        }
+                    }
+                }    
             }
         }
         stage('Trailrunner reports') {
