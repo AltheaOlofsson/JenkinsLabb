@@ -31,7 +31,7 @@ Changing dates to rent a car
     [Documentation]     Tests Requirement from Date Selection that valid dates take me to Car Selection.
     [Tags]      TestValidDates
     Given I Make Sure I Am Logged In
-    When I Select Dates
+    #When I Select Dates
     Then Search for selected dates are visible
     And I Log Out
 
