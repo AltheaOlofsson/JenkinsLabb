@@ -12,12 +12,11 @@ pipeline {
         }
         stage('Test TrailRunner') {
             steps {
+                dir('TrailrunnerProject') {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     script {
                         try {
-                        dir('TrailrunnerProject') {
                         bat 'mvn test'
-                        }
                         }catch {
                             mail to: 'althea.olofsson@gmail.com',
                             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
@@ -25,7 +24,8 @@ pipeline {
                             throw e
                         }
                     }
-                }    
+                }
+                }
             }
         }
         stage('Trailrunner reports') {
@@ -43,7 +43,7 @@ pipeline {
         stage('Run Robot Framework') {
             steps {
                 dir('Selenium') {
-                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults --nostatusrc BokaBil.robot'
                 }
             }
         }
