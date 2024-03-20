@@ -1,13 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        gitUrl  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
-    }
-    options {
-        skipDefaultCheckout()
-    }
-
     stages {       
 
         stage('Build TrailRunner') {
