@@ -4,9 +4,9 @@ pipeline {
     environment {
         gitUrl  =   "https://github.com/AltheaOlofsson/JenkinsLabb.git"
     }
-    parameters {
-        choice choices: ['main', 'b1'], description: 'Which Branch do you want to run?', name: 'Branch'
-    }
+   # parameters {
+   #     choice choices: ['main', 'b1'], description: 'Which Branch do you want to run?', name: 'Branch'
+   # }
     options {
         skipDefaultCheckout()
     }
@@ -17,11 +17,6 @@ pipeline {
                 cleanWs()
             }
         } 
-        stage('Checkout') {
-            steps {
-                git branch: "${params.Branch}", url: "${gitUrl}"
-            }
-        }
         stage('Build TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
