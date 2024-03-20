@@ -19,7 +19,7 @@ pipeline {
         } 
         stage('Checkout') {
             steps {
-                git branch: "${params.Branch}", url: "${gitURL}"
+                git branch: "${params.Branch}", url: "${gitUrl}"
             }
         }
         stage('Build TrailRunner') {
@@ -51,7 +51,7 @@ pipeline {
         stage('Run Robot Framework') {
             steps {
                 dir('Selenium') {
-                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults --nostatusrc BokaBil.robot'
+                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
                 }
             }
         }
