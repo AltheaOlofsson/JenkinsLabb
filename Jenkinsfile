@@ -20,8 +20,8 @@ pipeline {
                         bat 'mvn test'
                         }catch (e) {
                             mail to: 'althea.olofsson@gmail.com',
-                            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}"
+                            subject: "Test Failed: ${currentBuild.fullDisplayName}",
+                            body: "Recent tests failed. Check it out: ${env.BUILD_URL}"
                             throw e
                         }
                     }
@@ -50,8 +50,8 @@ pipeline {
                         bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
                         }catch (e) {
                             mail to: 'althea.olofsson@gmail.com',
-                            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
-                            body: "Something is wrong with ${env.BUILD_URL}"
+                            subject: "Test Failed: ${currentBuild.fullDisplayName}",
+                            body: "Recent Test failed. Check it out: ${env.BUILD_URL}"
                             throw e
                         }
                     }
