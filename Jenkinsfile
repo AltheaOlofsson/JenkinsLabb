@@ -13,7 +13,7 @@ pipeline {
         stage('Test TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
                     bat 'mvn test'
                    
                 }
