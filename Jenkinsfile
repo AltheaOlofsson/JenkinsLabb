@@ -13,9 +13,18 @@ pipeline {
         stage('Test TrailRunner') {
             steps {
                 dir('TrailrunnerProject') {
-                catchError(buildResult: 'UNSTABLE', stageResult: 'UNSTABLE') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     bat 'mvn test'
-                   
+                    script {
+                        try {
+                        bat 'mvn test'
+                        }catch (e) {
+                            mail to: 'althea.olofsson@gmail.com',
+                            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}"
+                            throw e
+                        }
+                    }
                 }
                 }
             }
@@ -33,18 +42,24 @@ pipeline {
             }
         }
         stage('Run Robot Framework') {
-            steps {
+             steps {
                 dir('Selenium') {
-                    bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                    script {
+                        try {
+                        bat 'robot  --variable browser:headlesschrome --outputdir RobotResults BokaBil.robot'
+                        }catch (e) {
+                            mail to: 'althea.olofsson@gmail.com',
+                            subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+                            body: "Something is wrong with ${env.BUILD_URL}"
+                            throw e
+                        }
+                    }
+                }
                 }
             }
         }
         stage('RobotResult') {
-             when {
-                expression {
-                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
-                }
-            }
             steps {
                 dir('Selenium') {
                     robot outputPath: 'RobotResults'
